@@ -1,1 +1,1 @@
-# epidemiologyCOVID19
+# epidmioCOVID
