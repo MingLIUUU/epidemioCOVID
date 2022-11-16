@@ -18,7 +18,13 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of epidemioCOVID is to ...
+The goal of 'epidemioCOVID' is to perform alignment between user-input of COVID 
+strands in FASTA form and the reference sequence of COVID virus and identify the mutation site of 'the user-input with a graphical visualization of the mutation 
+site in the sequence. This package can analyze multiple sequence samples and 
+propose the possible relation between samples to construct an epidemiological transmission link if exits.
+This package has one analytic functions and one plotting functions, and has not
+yet implemented the multiple sequence comparison function. This package is 
+developed under 'R version 4.0.2 (2020-06-22)' and platform 'Platform: x86_64-w64-mingw32/x64'. (64-bit).
 
 ## Installation
 
@@ -26,7 +32,8 @@ You can install the development version of epidemioCOVID from [GitHub](https://g
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("MingLIUUU/epidemioCOVID")
+devtools::install_github("MingLIUUU/epidemioCOVID", build_vignettes = TRUE)
+library("epidemioCOVID")
 ```
 
 ## Example
