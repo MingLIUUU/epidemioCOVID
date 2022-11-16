@@ -18,8 +18,9 @@ Imports:
   ggplot2,
   stats
 Suggests:
-  testthat,
-  knir
-VignetteBuilder:knir
+    testthat (>= 3.0.0),
+    knir
+VignetteBuilder: knir
 Depends: R (>= 3.1.0)
 LazyData: true
+Config/testthat/edition: 3
