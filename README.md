@@ -32,8 +32,11 @@ To run the shinyApp: Under construction
 
 ## Overview
 
-ls(“package:epidemioCOVID”) data(package = “epidemioCOVID”) \# optional
-browseVignettes(“epidemioCOVID”)
+``` r
+ls("package:epidemioCOVID")
+data(package = "epidemioCOVID") # optional
+browseVignettes("epidemioCOVID")
+```
 
 ## Contributions
 
@@ -41,6 +44,14 @@ This package is written by Mingzheng Liu, with coding style taughted in
 BCB410 class by Professor Anjali Silva.
 
 ## References
+
+Bioinformatics With Ease. “Import Sequences From NCBI in R.”
+<https://www.youtube.com/watch?v=vRfbDyhERDY>
+
+Silva, Anjali. “Anjalisilva/TestingPackage: A Simple R Package
+Illustrating Components of an R Package: 2019-2022 BCB410H - Applied
+Bioinformatics, University of Toronto, Canada.” GitHub,
+<https://github.com/anjalisilva/TestingPackage>.
 
 ## Acknowledgements:
 

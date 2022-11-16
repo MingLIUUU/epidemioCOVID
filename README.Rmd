@@ -39,9 +39,11 @@ To run the shinyApp:
 Under construction
 
 ## Overview
+``` r
 ls("package:epidemioCOVID")
 data(package = "epidemioCOVID") # optional
 browseVignettes("epidemioCOVID")
+```
 
 ## Contributions
 This package is written by Mingzheng Liu, with coding style taughted in BCB410 
