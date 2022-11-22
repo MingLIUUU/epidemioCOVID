@@ -1,6 +1,11 @@
 ---
-title: "Introduction_TestPackage"
-output: rmarkdown::html_vignette
+title: "Introduction_epidemioCOVID"
+author: "Mingzheng Liu"
+date: "`r format(Sys.time(), '%d %b %Y')`"
+output: 
+  rmarkdown::html_vignette
+    toc: true
+    number_sections: false
 vignette: >
   %\VignetteIndexEntry{Introduction_TestPackage}
   %\VignetteEngine{knitr::rmarkdown}
