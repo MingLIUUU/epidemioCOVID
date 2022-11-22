@@ -6,16 +6,20 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+## Description
+
 The goal of ‘epidemioCOVID’ is to perform alignment between user-input
 of COVID strands in FASTA form and the reference sequence of COVID virus
-and identify the mutation site of ‘the user-input with a graphical
+and identify the mutation site of ’the user-input with a graphical
 visualization of the mutation site in the sequence. This package can
 analyze multiple sequence samples and propose the possible relation
 between samples to construct an epidemiological transmission link if
-exits. This package has one analytic functions and one plotting
-functions, and has not yet implemented the multiple sequence comparison
-function. This package is developed under ’R version 4.0.2 (2020-06-22)’
-and platform ‘Platform: x86_64-w64-mingw32/x64’. (64-bit).
+exits.
+
+This package has one analytic functions and one plotting functions, and
+has not yet implemented the multiple sequence comparison function. This
+package is developed under ‘R version 4.0.2 (2020-06-22)’ and platform
+‘Platform: x86_64-w64-mingw32/x64’. (64-bit).
 
 ## Installation
 
@@ -32,8 +36,15 @@ To run the shinyApp: Under construction
 
 ## Overview
 
+`epidemioCOVID` contains 2 funtions.
+
+To list all functions available in the package:
+
 ``` r
 ls("package:epidemioCOVID")
+```
+
+``` r
 data(package = "epidemioCOVID") # optional
 browseVignettes("epidemioCOVID")
 ```
@@ -45,13 +56,13 @@ BCB410 class by Professor Anjali Silva.
 
 ## References
 
-Bioinformatics With Ease. “Import Sequences From NCBI in R.”
-<https://www.youtube.com/watch?v=vRfbDyhERDY>
+- \[Bioinformatics With Ease. (2021). Import Sequences From NCBI in R.\]
+  (<https://www.youtube.com/watch?v=vRfbDyhERDY>)
 
-Silva, Anjali. “Anjalisilva/TestingPackage: A Simple R Package
-Illustrating Components of an R Package: 2019-2022 BCB410H - Applied
-Bioinformatics, University of Toronto, Canada.” GitHub,
-<https://github.com/anjalisilva/TestingPackage>.
+- \[Silva, Anjali. “Anjalisilva/TestingPackage: A Simple R Package
+  Illustrating Components of an R Package: 2019-2022 BCB410H - Applied
+  Bioinformatics, University of Toronto, Canada.” GitHub.\]
+  (<https://github.com/anjalisilva/TestingPackage>)
 
 ## Acknowledgements:
 
