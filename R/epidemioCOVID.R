@@ -6,18 +6,21 @@
 #' I would like to improve it so that this package can analyze multiple sequence
 #' samples and propose the possible relation between samples to construct an
 #' epidemiological transmission link if exits.
-#'
-#' @param datasap of user-imported sample strand
-#'
-#' @param datatar of targeting aligning strand of the original virus sequence
+
+
+#' @param spl user-imported sample fasta data path name
 #'
 #' @return Returns the persentage of different nucleotides
-
 #
-similaritypc <- function(spl){
+match.percent <- function(spl){
+  spl <- readLines(spl)
+  spl <- c(spl[1], paste(spl[-1], sep = "", collapse = ""))
+  spl <- spl[2]
+  spl <- unlist(strsplit(spl, ""))
+
   load(file='data/refseq.rda')
-  ref <- row.names(refseq) # I dont know why the data go into row names
-  ref <- unlist(strsplit(ref, ""))
+
+  ref <- unlist(strsplit(refseq, ""))
   # check input sample, do convertion
   if ((typeof(spl) == "character") == FALSE) {
     print("the imput data type is not character")
@@ -33,10 +36,23 @@ similaritypc <- function(spl){
   count = 0
   cmplen <- min(length(ref),length(spl))
 
-  for (i in cmplen) {
+  for (i in 1:cmplen) {
     if (ref[i] != spl[i]) {
       count = count + 1
     }
   }
-  return (i / cmplen)
+  return (count / cmplen)
 }
+
+#' @param spl of user-imported sample fasta data path name
+#'
+#' @return Returns the persentage of different nucleotides
+#
+mutsite.present <- function(splfasta) {
+  ref <- system.file("extdata", "referseq.fasta", package = "epidemioCOVID")
+
+  mySequences <- readDNAStringSet(c(splfasta, ref))
+  ggmsa(mySequences)
+  return()
+}
+
