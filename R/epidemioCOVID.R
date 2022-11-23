@@ -6,8 +6,6 @@
 #' I would like to improve it so that this package can analyze multiple sequence
 #' samples and propose the possible relation between samples to construct an
 #' epidemiological transmission link if exits.
-
-
 #' @param spl user-imported sample fasta data path name
 #'
 #' @return Returns the persentage of different nucleotides
@@ -43,16 +41,19 @@ match.percent <- function(spl){
   }
   return (count / cmplen)
 }
-
+#' Representing Aligned sequence with muatation sites
+#
+#' perform alignment between current COVID strands and one or more user-provided
+#' genome sequence samples of COVID virus and identify the strand each sample
+#'
 #' @param spl of user-imported sample fasta data path name
 #'
 #' @return Returns the persentage of different nucleotides
 #
-mutsite.present <- function(splfasta) {
+mutsite.present <- function(splfasta, start, end) {
   ref <- system.file("extdata", "referseq.fasta", package = "epidemioCOVID")
-
   mySequences <- readDNAStringSet(c(splfasta, ref))
-  ggmsa(mySequences)
+  g <- ggmsa(mySequences, start, end)
   return()
 }
 

@@ -1,0 +1,118 @@
+---
+title: "Introduction_expidemioCOVID"
+author: "Mingzheng Liu"
+date: "`r format(Sys.time(), '%d %b %Y')`"
+output: 
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction_expidemioCOVID}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.align = "center", 
+               out.width = "90%",
+               fig.width = 6, fig.height = 5.5,
+               dev.args=list(pointsize=10),
+               par = TRUE, # needed for setting hook 
+               collapse = TRUE, # collapse input & ouput code in chunks
+               warning = FALSE)
+knit_hooks$set(par = function(before, options, envir)
+  { if(before && options$fig.show != "none") 
+       par(family = "sans", mar=c(4.1,4.1,1.1,1.1), mgp=c(3,1,0), tcl=-0.5)
+})
+set.seed(1) # for exact reproducibility
+```
+       
+## Introduction
+
+
+**epidemioCOVID** is a simple R package for performing sequence alignment of using mixtures of multivariate Gaussian distributions. Main function __*match.percent*__ permits to carry out sequence alignmnet with reference strand using parameter of user input fasta sequence. Function __*mutsite.present*__ (under construction) permits to visualize clustering results. For more information, see details below. **This document gives a tour of epidemioCOVID (version 0.1.0) functionalities**. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production. 
+
+
+See `help(package = "epidemioCOVID")` for further details and references provided by `citation("epidemioCOVID")`. To download **epidemioCOVID**, use the following commands:
+
+``` r
+require("devtools")
+install_github("MingLIUUU/epidemioCOVID", build_vignettes = TRUE)
+library("epidemioCOVID")
+```
+To list all functions available in the package:
+``` r
+lsf.str("package:epidemioCOVID")
+```
+
+<br>
+
+## Details
+
+
+Given a path name of a fasta file of the covid sequence, we can do mapping with the first COVID sequence to perform a sequence alignmnet to find the mutataion site.
+
+
+
+## Clustering Data
+Here, an example dataset is created with two components, with a mixing proportion of 0.8 and 0.2. There are 100 observations in the dataset and the dimensionality is 6. 
+``` r
+ G <- 2 # number of true clusters/components
+ dimension <- 6
+ nObservations <- 1000
+ piGTrue <- c(0.8, 0.2)
+ set.seed(1234)
+ mean1 <- rep(1, dimension)
+ mean2 <- rep(4, dimension)
+ sigma1 <- diag(dimension) * 2
+ sigma2 <- diag(dimension) * 2
+ # library(mvtnorm)
+ component1 <- mvtnorm::rmvnorm(nObservations * piGTrue[1], mean = mean1, sigma = sigma1)
+ dim(component1)
+ component2 <- mvtnorm::rmvnorm(nObservations * piGTrue[2], mean = mean2, sigma = sigma2)
+ dim(component2)
+ dataset <- rbind(component1, component2)
+ dim(dataset) # 100   6
+ # Visualize data
+ pairs(dataset, col = c(rep(2, nObservations * piGTrue[1]), rep(3, nObservations * piGTrue[2])))
+```
+
+<div style="text-align:center"><img src="PairsPlot2Components.png" alt="PairsPlot2Components" width="800"/>
+<div style="text-align:left">
+<br>
+<div style="text-align:left">
+
+
+``` r
+ # Cluster data
+ clustOutput <- epidemioCOVID::mixGaussianEM(dataset = dataset,
+                                           membership = c(rep(1, nObservations * piGTrue[1]),
+                                                          rep(2, nObservations * piGTrue[2])),
+                                           gmin = 1,
+                                           gmax = 5,
+                                           initMethod = "kmeans",
+                                           nInitIterations = 1)
+```
+
+The model selected by BIC for this dataset can be viewed as follows.
+
+``` r
+clustOutput$BICresults$BICmodelselected
+```
+
+
+
+## References
+
+* [Bioinformatics With Ease. (2021). Import Sequences From NCBI in R.] (https://www.youtube.com/watch?v=vRfbDyhERDY)
+
+* [Silva, Anjali. “Anjalisilva/TestingPackage: A Simple R Package Illustrating 
+Components of an R Package: 2019-2022 BCB410H - Applied Bioinformatics, 
+University of Toronto, Canada.” GitHub.] (https://github.com/anjalisilva/TestingPackage) 
+
+* [L Zhou, T Feng, S Xu, F Gao, TT Lam, Q Wang, T Wu, H Huang, L Zhan, L Li, Y Guan, Z Dai*, G Yu* ggmsa: a visual exploration tool for multiple sequence alignment and associated data. Briefings in Bioinformatics. DOI:10.1093/bib/bbac222]
+
+----
+
+```{r}
+sessionInfo()
+```
