@@ -51,56 +51,6 @@ lsf.str("package:epidemioCOVID")
 
 Given a path name of a fasta file of the covid sequence, we can do mapping with the first COVID sequence to perform a sequence alignmnet to find the mutataion site.
 
-
-
-## Clustering Data
-Here, an example dataset is created with two components, with a mixing proportion of 0.8 and 0.2. There are 100 observations in the dataset and the dimensionality is 6. 
-``` r
- G <- 2 # number of true clusters/components
- dimension <- 6
- nObservations <- 1000
- piGTrue <- c(0.8, 0.2)
- set.seed(1234)
- mean1 <- rep(1, dimension)
- mean2 <- rep(4, dimension)
- sigma1 <- diag(dimension) * 2
- sigma2 <- diag(dimension) * 2
- # library(mvtnorm)
- component1 <- mvtnorm::rmvnorm(nObservations * piGTrue[1], mean = mean1, sigma = sigma1)
- dim(component1)
- component2 <- mvtnorm::rmvnorm(nObservations * piGTrue[2], mean = mean2, sigma = sigma2)
- dim(component2)
- dataset <- rbind(component1, component2)
- dim(dataset) # 100   6
- # Visualize data
- pairs(dataset, col = c(rep(2, nObservations * piGTrue[1]), rep(3, nObservations * piGTrue[2])))
-```
-
-<div style="text-align:center"><img src="PairsPlot2Components.png" alt="PairsPlot2Components" width="800"/>
-<div style="text-align:left">
-<br>
-<div style="text-align:left">
-
-
-``` r
- # Cluster data
- clustOutput <- epidemioCOVID::mixGaussianEM(dataset = dataset,
-                                           membership = c(rep(1, nObservations * piGTrue[1]),
-                                                          rep(2, nObservations * piGTrue[2])),
-                                           gmin = 1,
-                                           gmax = 5,
-                                           initMethod = "kmeans",
-                                           nInitIterations = 1)
-```
-
-The model selected by BIC for this dataset can be viewed as follows.
-
-``` r
-clustOutput$BICresults$BICmodelselected
-```
-
-
-
 ## References
 
 * [Bioinformatics With Ease. (2021). Import Sequences From NCBI in R.] (https://www.youtube.com/watch?v=vRfbDyhERDY)
