@@ -64,6 +64,11 @@ BCB410 class by Professor Anjali Silva.
   Bioinformatics, University of Toronto, Canada.” GitHub.\]
   (<https://github.com/anjalisilva/TestingPackage>)
 
+- \[L Zhou, T Feng, S Xu, F Gao, TT Lam, Q Wang, T Wu, H Huang, L Zhan,
+  L Li, Y Guan, Z Dai*, G Yu* ggmsa: a visual exploration tool for
+  multiple sequence alignment and associated data. Briefings in
+  Bioinformatics. <DOI:10.1093/bib/bbac222>\]
+
 ## Acknowledgements:
 
 This package was developed as part of an assessment for 2022 BCB410H:
