@@ -9,7 +9,8 @@
 #' @param spl user-imported sample fasta data path name
 #'
 #' @return Returns the persentage of different nucleotides
-#
+#‘ @export
+#'
 match.percent <- function(spl){
   spl <- readLines(spl)
   spl <- c(spl[1], paste(spl[-1], sep = "", collapse = ""))
@@ -49,7 +50,8 @@ match.percent <- function(spl){
 #' @param spl of user-imported sample fasta data path name
 #'
 #' @return Returns the persentage of different nucleotides
-#
+#‘ @export
+#'
 mutsite.present <- function(splfasta, start, end) {
   ref <- system.file("extdata", "referseq.fasta", package = "epidemioCOVID")
   mySequences <- readDNAStringSet(c(splfasta, ref))
