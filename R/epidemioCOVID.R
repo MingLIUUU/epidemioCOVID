@@ -1,44 +1,84 @@
+#' read the FASTA format file
+#'
+#' read the input in FASTA format
+#' @param  FA Input file name (or text connection)
+#'
+#' @return Returns data.frame
+#' $header char  the FASTA header lines $seq   char  the actual sequences
+#'
+#' @references
+#' Boris Steipe. “Introduction to R.”
+#' \href{http://steipe.biochemistry.utoronto.ca/bio/RPR-Introduction.html}{Link}
+#'
+#' @examples
+#' FA <- system.file("extdata", "sample.fasta", package = "epidemioCOVID")
+#' seqs <- readFASTA(FA)
+#'
+#‘ @export
+#'
+readFASTA <- function(FA) {
+  # Note: if length(FA) is one, it is assumed to be a filename
+  if (length(FA) == 1) {
+    FA <- readLines(FA)
+  }
+  FA <- FA[! grepl("^$", FA)]   # drop all empty lines
+  iHead <- grep("^>", FA) # find all headers
+  myFA <- data.frame(head = FA[iHead],
+                     refID = character(length(iHead)),
+                     seq  = character(length(iHead)))
+
+  for (i in seq_along(iHead)) {
+    header <- FA[iHead[i]]
+    refidlast <- unlist(gregexpr('\\|', header))[1] - 2
+    myFA$refID[i] <- paste0(substring(header, 2, last= refidlast), collapse = "")
+    first <- iHead[i] + 1   # first line of each sequence
+    last  <- ifelse(i < length(iHead), iHead[i + 1] - 1, length(FA)) # ...last
+    myFA$seq[i] <- paste0(FA[first:last], collapse = "")
+  }
+  return(myFA)
+}
+
+
+
 #' Aligning sample strends with existing covid strands
 #'
 #' perform alignment between current COVID strands and one or more user-provided
 #' genome sequence samples of COVID virus and identify the strand each sample
-#' belongs to with a graphical visualization of the mutation site in the sequence.
-#' I would like to improve it so that this package can analyze multiple sequence
-#' samples and propose the possible relation between samples to construct an
-#' epidemiological transmission link if exits.
+#' belongs to.
 #' @param spl user-imported sample fasta data path name
 #' @param ref user-imported sample fasta data path name
 #'
-#' @return Returns the persentage of different nucleotides
+#' @return Returns data.frame
+#'      $header char the FASTA header lines $seq double percentage of alignment
 #'
 #' @examples
-#' load(file='data/refseq.rda')
-#' load(file='data/splseq.rda')
-#' matchPer(refseq, splseq)
+#' FA <- system.file("extdata", "referseq.fasta", package = "epidemioCOVID")
+#' seqs <- readFASTA(FA)
+#' MP <- matchPer(seqs)
 #'
 #‘ @export
 #'
-matchPer <- function(spl, ref) {
-  spl <- unlist(strsplit(spl, ""))
-  ref <- unlist(strsplit(ref, ""))
+matchPer <- function(seqs) {
+  load("./data/refseq.rda")
+  ref <- unlist(strsplit(refseq, ""))
 
-  # check input sample, do convertion
-  if ((typeof(spl) == "character") == FALSE) {
-    stop("the imput data type is not character")
-  }
-  spl <- unlist(strsplit(spl, ""))
+  # initiate a dataframe for percentage data
+  myDF <- data.frame(refID = seqs$refID,
+                     percent = double(nrow(seqs)))
+  # Do alignment for match percentage
+  for (j in 1:nrow(seqs)) {
+    spl <- unlist(strsplit(seqs$seq[j], ""))
+    count = 0
+    cmplen <- min(length(ref),length(spl))
 
-  # check length
-  if (length(ref) != length(spl)) {
-    warning("unequal sequence length warning: incomplete sample sequence can
-    yield a meaningless result")
+    for (i in 1:cmplen) {
+      if ((ref[i] == spl[i])) { count = count + 1 }
+    }
+    myDF$percent[j] <- count/cmplen
+    cat(sprintf("%s has a coverage of %4.2f %%.\n", seqs$refID[j],
+                myDF$percent[j]))
   }
-  count = 0
-  cmplen <- min(length(ref),length(spl))
-  for (i in 1:cmplen) {
-    if (ref[i] != spl[i]) { count = count + 1 }
-  }
-  return (count / cmplen)
+  return (myDF)
 }
 
 #' Representing Aligned sequence with muatation sites
@@ -46,7 +86,7 @@ matchPer <- function(spl, ref) {
 #' perform alignment between multiple sequence fasta file
 #' genome sequence samples of COVID virus
 #'
-#' @param spl of user-imported sample fasta sequence
+#' @param fasta of user-imported sample fasta sequence
 #' @param st start position of the sequence to visulize
 #' @param en end position of the sequence to visulize
 #'
@@ -59,14 +99,16 @@ matchPer <- function(spl, ref) {
 #'  \href{https://github.com/YuLab-SMU/ggmsa}
 #'
 #' @examples
-#' fasta = "./inst/extdata/sample.fasta"
+#' fasta <- system.file("extdata", "sample2.fasta", package = "epidemioCOVID")
 #' siteVisual(fasta, 1, 20)
 #'
 #' @importFrom ggmsa ggmsa
 #‘ @export
 #'
-siteVisual <- function(fasta, st , en) {
-  Gra <- ggmsa(fasta, start = st, end = en, color="Chemistry_NT")
+siteVisual <- function(fasta, st, en) {
+  Gra <- (ggmsa(fasta, start = st, end = en, color="Chemistry_NT")
+  + geom_seqlogo() + geom_msaBar())
   return(Gra)
 }
+
 
