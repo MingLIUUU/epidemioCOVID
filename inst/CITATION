@@ -2,10 +2,10 @@ citHeader("To cite epidemioCOVID in publications use:")
 
 citEntry(
   entry    = "Unpublished",
-  title    = "epidemioCOVID: An Example R Package For BCB410H",
+  title    = "epidemioCOVID: An sequence alignment visulization tool for epidemiology and Covid 19 pandemic",
   author   = "Mingzheng Liu",
   journal  = "Unpublished",
   year     = "2022",
-  textVersion = paste("Liu, M. (2022) epidemioCOVID: An Example R Package For BCB410H. Unpublished. URL https://github.com/MingLIUUU/epidemioCOVID."
+  textVersion = paste("Liu, M. (2022) epidemioCOVID: An sequence alignment visulization tool for epidemiology and Covid 19 pandemic. Unpublished. URL https://github.com/MingLIUUU/epidemioCOVID."
   )
 )

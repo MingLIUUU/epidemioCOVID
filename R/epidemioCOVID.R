@@ -24,8 +24,7 @@ matchPer <- function(spl, ref) {
 
   # check input sample, do convertion
   if ((typeof(spl) == "character") == FALSE) {
-    print("the imput data type is not character")
-    exit(1)
+    stop("the imput data type is not character")
   }
   spl <- unlist(strsplit(spl, ""))
 
@@ -34,14 +33,10 @@ matchPer <- function(spl, ref) {
     warning("unequal sequence length warning: incomplete sample sequence can
     yield a meaningless result")
   }
-
   count = 0
   cmplen <- min(length(ref),length(spl))
-
   for (i in 1:cmplen) {
-    if (ref[i] != spl[i]) {
-      count = count + 1
-    }
+    if (ref[i] != spl[i]) { count = count + 1 }
   }
   return (count / cmplen)
 }
