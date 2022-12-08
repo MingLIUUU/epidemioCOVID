@@ -1,5 +1,5 @@
 #' Aligning sample strends with existing covid strands
-#
+#'
 #' perform alignment between current COVID strands and one or more user-provided
 #' genome sequence samples of COVID virus and identify the strand each sample
 #' belongs to with a graphical visualization of the mutation site in the sequence.
@@ -7,19 +7,20 @@
 #' samples and propose the possible relation between samples to construct an
 #' epidemiological transmission link if exits.
 #' @param spl user-imported sample fasta data path name
+#' @param ref user-imported sample fasta data path name
 #'
 #' @return Returns the persentage of different nucleotides
+#'
+#' @examples
+#' load(file='data/refseq.rda')
+#' load(file='data/splseq.rda')
+#' matchPer(refseq, splseq)
 #‘ @export
 #'
-match.percent <- function(spl){
-  spl <- readLines(spl)
-  spl <- c(spl[1], paste(spl[-1], sep = "", collapse = ""))
-  spl <- spl[2]
+matchPer <- function(spl, ref){
   spl <- unlist(strsplit(spl, ""))
+  ref <- unlist(strsplit(ref, ""))
 
-  load(file='data/refseq.rda')
-
-  ref <- unlist(strsplit(refseq, ""))
   # check input sample, do convertion
   if ((typeof(spl) == "character") == FALSE) {
     print("the imput data type is not character")
@@ -42,20 +43,33 @@ match.percent <- function(spl){
   }
   return (count / cmplen)
 }
+
 #' Representing Aligned sequence with muatation sites
 #
-#' perform alignment between current COVID strands and one or more user-provided
-#' genome sequence samples of COVID virus and identify the strand each sample
+#' perform alignment between multiple sequence fasta file
+#' genome sequence samples of COVID virus
 #'
-#' @param spl of user-imported sample fasta data path name
+#' @param spl of user-imported sample fasta sequence
+#' @param st start position of the sequence to visulize
+#' @param en end position of the sequence to visulize
 #'
-#' @return Returns the persentage of different nucleotides
+#' @return Returns the visualization of the selected site in the alignment
+#'
+#' @references L Zhou, T Feng, S Xu, F Gao, TT Lam, Q Wang, T Wu, H Huang,
+#' L Zhan, L Li, Y Guan, Z Dai*, G Yu* ggmsa: a visual exploration tool for
+#' multiple sequence alignment and associated data. Briefings in Bioinformatics.
+#'  DOI:10.1093/bib/bbac222]
+#'  \href{https://github.com/YuLab-SMU/ggmsa}
+#'
+#' @examples
+#' fasta = "./inst/extdata/sample.fasta"
+#' siteVisual(fasta, 1, 20)
+#'
+#' @importFrom ggmsa ggmsa
 #‘ @export
 #'
-mutsite.present <- function(splfasta, start, end) {
-  ref <- system.file("extdata", "referseq.fasta", package = "epidemioCOVID")
-  mySequences <- readDNAStringSet(c(splfasta, ref))
-  g <- ggmsa(mySequences, start, end)
-  return()
+siteVisual <- function(fasta, st , en) {
+  Gra <- ggmsa(fasta, start = st, end = en, color="Chemistry_NT")
+  return(Gra)
 }
 

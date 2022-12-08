@@ -69,6 +69,10 @@ BCB410 class by Professor Anjali Silva.
   multiple sequence alignment and associated data. Briefings in
   Bioinformatics. <DOI:10.1093/bib/bbac222>\]
 
+- \[Hahsler M, Nagar A (2019). rBLAST: R Interface for the Basic Local
+  Alignment Search Tool. R package version 0.99.2, URL:
+  <https://github.com/mhahsler/rBLAST>.\]
+
 ## Acknowledgements:
 
 This package was developed as part of an assessment for 2022 BCB410H:
