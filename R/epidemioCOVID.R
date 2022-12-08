@@ -15,6 +15,7 @@
 #' load(file='data/refseq.rda')
 #' load(file='data/splseq.rda')
 #' matchPer(refseq, splseq)
+#'
 #‘ @export
 #'
 matchPer <- function(spl, ref) {
@@ -30,8 +31,8 @@ matchPer <- function(spl, ref) {
 
   # check length
   if (length(ref) != length(spl)) {
-    warning("unequal sequence length warning: incomplete sample sequence can yield
-    a meaningless result")
+    warning("unequal sequence length warning: incomplete sample sequence can
+    yield a meaningless result")
   }
 
   count = 0
