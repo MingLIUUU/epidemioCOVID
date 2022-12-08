@@ -17,7 +17,7 @@
 #' matchPer(refseq, splseq)
 #‘ @export
 #'
-matchPer <- function(spl, ref){
+matchPer <- function(spl, ref) {
   spl <- unlist(strsplit(spl, ""))
   ref <- unlist(strsplit(ref, ""))
 
@@ -27,9 +27,10 @@ matchPer <- function(spl, ref){
     exit(1)
   }
   spl <- unlist(strsplit(spl, ""))
+
   # check length
   if (length(ref) != length(spl)) {
-    print("unequal sequence length warning: incomplete sample sequence can yield
+    warning("unequal sequence length warning: incomplete sample sequence can yield
     a meaningless result")
   }
 
