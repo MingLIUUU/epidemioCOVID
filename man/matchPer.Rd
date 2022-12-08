@@ -4,7 +4,7 @@
 \alias{matchPer}
 \title{Aligning sample strends with existing covid strands}
 \usage{
-matchPer(spl, ref)
+matchPer(seqs)
 }
 \arguments{
 \item{spl}{user-imported sample fasta data path name}
@@ -12,20 +12,18 @@ matchPer(spl, ref)
 \item{ref}{user-imported sample fasta data path name}
 }
 \value{
-Returns the persentage of different nucleotides
+Returns data.frame
+$header char the FASTA header lines $seq double percentage of alignment
 }
 \description{
 perform alignment between current COVID strands and one or more user-provided
 genome sequence samples of COVID virus and identify the strand each sample
-belongs to with a graphical visualization of the mutation site in the sequence.
-I would like to improve it so that this package can analyze multiple sequence
-samples and propose the possible relation between samples to construct an
-epidemiological transmission link if exits.
+belongs to.
 }
 \examples{
-load(file='data/refseq.rda')
-load(file='data/splseq.rda')
-matchPer(refseq, splseq)
+FA <- system.file("extdata", "referseq.fasta", package = "epidemioCOVID")
+seqs <- readFASTA(FA)
+MP <- matchPer(seqs)
 
 
 }

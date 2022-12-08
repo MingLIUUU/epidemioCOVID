@@ -9,11 +9,11 @@ genome sequence samples of COVID virus}
 siteVisual(fasta, st, en)
 }
 \arguments{
+\item{fasta}{of user-imported sample fasta sequence}
+
 \item{st}{start position of the sequence to visulize}
 
 \item{en}{end position of the sequence to visulize}
-
-\item{spl}{of user-imported sample fasta sequence}
 }
 \value{
 Returns the visualization of the selected site in the alignment
@@ -24,7 +24,7 @@ perform alignment between multiple sequence fasta file
 genome sequence samples of COVID virus
 }
 \examples{
-fasta = "./inst/extdata/sample.fasta"
+fasta <- system.file("extdata", "sample2.fasta", package = "epidemioCOVID")
 siteVisual(fasta, 1, 20)
 
 }
