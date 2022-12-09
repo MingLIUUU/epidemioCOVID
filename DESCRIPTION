@@ -20,6 +20,7 @@ Imports:
     ggplot2 (>= 3.4.0),
     magrittr,
     methods,
+    msa,
     seqmagick,
     shiny,
     tidyr
