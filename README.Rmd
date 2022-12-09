@@ -17,11 +17,12 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 <!-- badges: end -->
+
 ## Description 
 
-The goal of 'epidemioCOVID' is to perform alignment between user-input of COVID strands in FASTA form and the reference sequence of COVID virus and identify the mutation site of 'the user-input with a graphical visualization of the mutation site in the sequence. This package can analyze multiple sequence samples and propose the possible relation between samples to construct an epidemiological transmission link if exits.
+The goal of 'epidemioCOVID' is to perform alignment between user-input of COVID gene sequence data in FASTA form and the reference sequence of COVID virus and identify the mutation site of 'the user-input with a graphical visualization of the mutation site in the sequence.
 
-This package has one analytic functions and one plotting functions, and has not yet implemented the multiple sequence comparison function. This package is developed under 'R version 4.0.2 (2020-06-22)' and platform 'Platform: x86_64-w64-mingw32/x64'. (64-bit).
+This package has one helper funtion for read FASTA file, one analytic function and Two plotting functions. This package is developed under 'R version 4.2.2 (2022-10-31)' and platform 'Platform: x86_64-w64-mingw32/x64'. (64-bit).
 
 ## Installation
 
@@ -33,20 +34,49 @@ devtools::install_github("MingLIUUU/epidemioCOVID", build_vignettes = TRUE)
 library("epidemioCOVID")
 ```
 To run the shinyApp:
-Under construction
+``` r
+runepidemioCOVID()
+```
+![](./inst/extdata/shiny.png)
 
 ## Overview
 
-`epidemioCOVID` contains 2 funtions.
+`epidemioCOVID` contains 4 funtions.
 
 To list all functions available in the package:
 
 ``` r
 ls("package:epidemioCOVID")
+data(package = "epidemioCOVID") # optional
 ```
+`epidemioCOVID` contains 5 functions to perform alignment between user-input of COVID gene sequence data in FASTA form and the reference sequence of COVID virus and identify the mutation site of 'the user-input with a graphical visualization of the mutation site in the sequence. The *readFASTA* is function that read the FASTA format file and turn it into input accepted by other functions. The *preAlign* function that prepare the mutiple sequnence set object generate by *readFASTA* to input of mutiple sequence alignment object. *alignMSA* is a function that uses the MUSCLE algorithm to align mutiple sequences and identify their conserved sites. 
+*msaPlot* is a plotting function that takes the result of the alignment by *alignMSA* and visualize the whole sequnce in the graph. 
+
+A quick example of using *msaPlot*
 
 ``` r
-data(package = "epidemioCOVID") # optional
+FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
+seqs <- epidemioCOVID::readFASTA(FA)
+msaSet <- preAlign(seqs, refseq = fakeref)
+msa <- alignMSA(msaSet)
+MP <- msaPlot(msa)
+```
+  ![](./inst/extdata/AlignmentPosition,jpeg)
+*siteVisual* is a plotting function that take the FASTA mutiple sequence file and visualize zoomed detail information of the sequnce position, and the start and end positions can be decided by the user. User is able to upload their mutiple suquence FASTA format file and doing sequnce alignment analysis. 
+
+A quick example of using *siteVisual*
+
+``` r
+fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
+siteVisual(fasta, 45, 55)
+```
+  ![](./inst/extdata/SiteVisual,jpeg)
+  
+They can also use the plotting funtion through the shiny implementation with a user-friendly graphic interface.
+
+
+``` r
+
 browseVignettes("epidemioCOVID")
 ```
 
@@ -57,15 +87,16 @@ This package is written by Mingzheng Liu, with coding style taughted in BCB410 c
 
 ## References
 
-* [Bioinformatics With Ease. (2021). Import Sequences From NCBI in R.] (https://www.youtube.com/watch?v=vRfbDyhERDY)
+* [Boris Steipe. “Introduction to R.”]
+(http://steipe.biochemistry.utoronto.ca/bio/RPR-Introduction.html)
+* [Boris Steipe. “Multiple Sequence Alignment.”]
+(http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html)
 
 * [Silva, Anjali. “Anjalisilva/TestingPackage: A Simple R Package Illustrating 
 Components of an R Package: 2019-2022 BCB410H - Applied Bioinformatics, 
 University of Toronto, Canada.” GitHub.] (https://github.com/anjalisilva/TestingPackage) 
 
 * [L Zhou, T Feng, S Xu, F Gao, TT Lam, Q Wang, T Wu, H Huang, L Zhan, L Li, Y Guan, Z Dai*, G Yu* ggmsa: a visual exploration tool for multiple sequence alignment and associated data. Briefings in Bioinformatics. DOI:10.1093/bib/bbac222]
-
-* [Hahsler M, Nagar A (2019). rBLAST: R Interface for the Basic Local Alignment Search Tool. R package version 0.99.2, URL: https://github.com/mhahsler/rBLAST.]
 
 ## Acknowledgements:
 This package was developed as part of an assessment for 2022
