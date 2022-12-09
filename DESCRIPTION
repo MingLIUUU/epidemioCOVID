@@ -29,4 +29,5 @@ VignetteBuilder: knitr
 Depends: R (>= 4.2.0)
 LazyData: true
 Config/testthat/edition: 3
-Remotes: github::YuLab-SMU/ggmsa
+
+biocViews:ggmsa
