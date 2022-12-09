@@ -23,3 +23,7 @@ seqs <- epidemioCOVID::readFASTA(FA)
 msaSet <- preAlign(seqs, refseq = fakeref)
 
 }
+\references{
+Boris Steipe. “Multiple Sequence Alignment.”
+\href{http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html}{Link}
+}

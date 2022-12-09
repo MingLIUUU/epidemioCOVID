@@ -20,7 +20,7 @@ belongs to.
 \examples{
 FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
 seqs <- epidemioCOVID::readFASTA(FA)
-msaset <- preAlign(seqs, refseq = fakeref)
+msaSet <- preAlign(seqs, refseq = fakeref)
 msa <- alignMSA(msaSet)
 MP <- msaPlot(msa)
 
@@ -31,4 +31,8 @@ MSA <- alignMSA(seqs)
 MP <- msaPlot(MSA)
 }
 
+}
+\references{
+Boris Steipe. “Multiple Sequence Alignment.”
+\href{http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html}{Link}
 }

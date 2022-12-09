@@ -50,14 +50,16 @@ readFASTA <- function(FA) {
 #'
 #' @return Returns an alignment Set
 #'
+#' @references
+#' Boris Steipe. “Multiple Sequence Alignment.”
+#' \href{http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html}{Link}
+#'
 #' @examples
 #' FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
 #' seqs <- epidemioCOVID::readFASTA(FA)
 #' msaSet <- preAlign(seqs, refseq = fakeref)
 #'
 #' @importFrom Biostrings DNAStringSet
-#' @importFrom msa msaMuscle
-#' @importFrom msa print
 #'
 #' @export
 #'
@@ -79,13 +81,16 @@ preAlign <- function(seqs, refseq = refseq) {
 #'
 #' @return Returns an alignment object
 #'
+#' @references
+#' Boris Steipe. “Multiple Sequence Alignment.”
+#' \href{http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html}{Link}
+#'
 #' @examples
 #' FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
 #' seqs <- epidemioCOVID::readFASTA(FA)
 #' msaSet <- preAlign(seqs, refseq = fakeref)
 #' msa <- alignMSA(msaSet)
 #'
-#' @importFrom Biostrings DNAStringSet
 #' @importFrom msa msaMuscle
 #' @importFrom msa print
 #'
@@ -109,10 +114,14 @@ alignMSA <- function(seqset) {
 #'
 #' @return Returns plot showing the alinment regions
 #'
+#' @references
+#' Boris Steipe. “Multiple Sequence Alignment.”
+#' \href{http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html}{Link}
+#'
 #' @examples
 #' FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
 #' seqs <- epidemioCOVID::readFASTA(FA)
-#' msaset <- preAlign(seqs, refseq = fakeref)
+#' msaSet <- preAlign(seqs, refseq = fakeref)
 #' msa <- alignMSA(msaSet)
 #' MP <- msaPlot(msa)
 #'
@@ -125,6 +134,8 @@ alignMSA <- function(seqset) {
 #' }
 #'
 #' @importFrom msa msaConservationScore
+#' @importFrom graphics points
+#' @importFrom utils data
 #'
 #' @export
 #'
@@ -132,9 +143,6 @@ msaPlot <- function(msa) {
   # preparing string set
 
   # Plot the well aligned region
-  # attach the BLOSUM62 package from the Biostrings package
-  data(BLOSUM62, package = "Biostrings")
-
   msaMScores <- msa::msaConservationScore(msa, substitutionMatrix = BLOSUM62)
   p <- plot(msaMScores, type = "l", col = "#205C5E",
             xlab = "Alignment Position")
@@ -161,7 +169,7 @@ msaPlot <- function(msa) {
 #' @param fasta the path for FASTA format multiple sequences
 #' @param start start position of the sequence to visulize
 #' @param end end position of the sequence to visulize
-#' @param legend	logical. Should this layer be included in the legends
+#' @param legend logical. Should this layer be included in the legends
 #'
 #' @return Returns the visualization of the selected site in the alignment
 #'
@@ -169,12 +177,13 @@ msaPlot <- function(msa) {
 #' L Zhan, L Li, Y Guan, Z Dai*, G Yu* ggmsa: a visual exploration tool for
 #' multiple sequence alignment and associated data. Briefings in Bioinformatics.
 #'  DOI:10.1093/bib/bbac222]
-#'  \href{https://github.com/YuLab-SMU/ggmsa}
+#' \href{https://github.com/YuLab-SMU/ggmsa}{Link}
 #'
 #' @examples
-#' FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
-#' siteVisual(fasta, 1, 20)
-#'
+#' \dontrun{
+#' fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
+#' siteVisual(fasta, 45, 55)
+#' }
 #' @examples
 #' \dontrun{
 #' fasta <- system.file("extdata", "sample2.fasta", package = "epidemioCOVID")
@@ -186,73 +195,13 @@ msaPlot <- function(msa) {
 #'
 #' @export
 #'
-siteVisual <- function(fasta, start, end, seq_name = TRUE, legend = TRUE) {
-  # prepare data
-  # aln <- MSA
-  #
-  # for (i in seq_along(rev(names(aln)))) {
-  #   header <- names(aln)[i]
-  #   refidlast <- unlist(gregexpr('\\|', header))[1] - 2
-  #   names(aln)[i] <- paste0(substring(header, 1, last= refidlast), collapse = "")
-  # }
-  # alnmat <- lapply(seq_along(aln), function(i) {
-  #   ##Preventing function collisions
-  #   base::strsplit(as.character(aln[[i]]), '')[[1]]
-  # }) %>% do.call('rbind', .)
-  #
-  #
-  # ## for DNAbin and AAbin
-  # alndf <- as.data.frame(alnmat, stringsAsFactors = FALSE)
-  #
-  # if(unique(names(aln)) %>% length == length(aln)) {
-  #   alndf$name = names(aln)
-  # }else{
-  #   stop("Sequences must have unique names")
-  # }
-  # cn = colnames(alndf)
-  # cn <- cn[!cn %in% "name"]
-  # df <- gather(alndf, "position", "character", cn)
-  #
-  # y <- df
-  #
-  # y$position = as.numeric(sub("V", "", y$position))
-  # y$character = toupper(y$character)
-  #
-  # y$name = factor(y$name, levels=rev(names(aln)))
-  #
-  #
-  # if (is.null(start)) start <- min(y$position)
-  # if (is.null(end)) end <- max(y$position)
-  #
-  # y <- y[y$position >=start & y$position <= end, ]
-  #
-  # data <- y
-  # #
-  # gra <- (ggplot() + geom_msa(data, start = st,
-  #                     end = en,
-  #                     font = "helvetical",
-  #                     color = "Chemistry_NT",
-  #                     custom_color = NULL,
-  #                     char_width = 0.9,
-  #                     none_bg = FALSE,
-  #                     by_conservation = FALSE,
-  #                     position_highlight = NULL,
-  #                     seq_name = TRUE,
-  #                     border = NULL,
-  #                     consensus_views = FALSE,
-  #                     use_dot = FALSE,
-  #                     disagreement = TRUE,
-  #                     ignore_gaps = FALSE,
-  #                     ref = NULL,
-  #                     show.legend = TRUE)
-  #      + theme_msa() + geom_seqlogo() + geom_msaBar())
-  #
-  # return(gra)
-  gra <- ( ggmsa(fasta, start = start, end = end, char_width = 0.5,
-        seq_name = seq_name, show.legend = legend)
-      + geom_seqlogo() + geom_msaBar() )
-  return(gra)
-
+siteVisual <- function(fasta, start, end,  legend = TRUE) {
+  gra <- (ggmsa(fasta, start = start, end = end, color = "Chemistry_NT",
+                char_width = 0.5, seq_name = T, show.legend = legend)
+          + geom_seqlogo()
+          + geom_msaBar()
+          )
+  return (gra)
 }
 
 

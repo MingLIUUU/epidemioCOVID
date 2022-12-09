@@ -23,3 +23,7 @@ msaSet <- preAlign(seqs, refseq = fakeref)
 msa <- alignMSA(msaSet)
 
 }
+\references{
+Boris Steipe. “Multiple Sequence Alignment.”
+\href{http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html}{Link}
+}

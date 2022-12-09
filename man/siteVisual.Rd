@@ -6,7 +6,7 @@
 perform alignment between multiple sequence fasta file
 genome sequence samples of COVID virus}
 \usage{
-siteVisual(fasta, start, end, seq_name = TRUE, legend = TRUE)
+siteVisual(fasta, start, end, legend = TRUE)
 }
 \arguments{
 \item{fasta}{the path for FASTA format multiple sequences}
@@ -26,9 +26,10 @@ perform alignment between multiple sequence fasta file
 genome sequence samples of COVID virus
 }
 \examples{
-FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
-siteVisual(fasta, 1, 20)
-
+\dontrun{
+fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
+siteVisual(fasta, 45, 55)
+}
 \dontrun{
 fasta <- system.file("extdata", "sample2.fasta", package = "epidemioCOVID")
 siteVisual(fasta, 1, 20)
@@ -39,5 +40,5 @@ L Zhou, T Feng, S Xu, F Gao, TT Lam, Q Wang, T Wu, H Huang,
 L Zhan, L Li, Y Guan, Z Dai*, G Yu* ggmsa: a visual exploration tool for
 multiple sequence alignment and associated data. Briefings in Bioinformatics.
 DOI:10.1093/bib/bbac222]
-\href{https://github.com/YuLab-SMU/ggmsa}
+\href{https://github.com/YuLab-SMU/ggmsa}{Link}
 }
