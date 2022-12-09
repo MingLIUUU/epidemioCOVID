@@ -5,7 +5,7 @@
 \alias{refseq}
 \title{Gene of reference sequence of COVID19 virus from ncbi}
 \format{
-A FASTA fomat sequence:
+A characte string represents nucleotide chain:
 }
 \source{
 National Center for Biotechnology Information
@@ -14,7 +14,7 @@ National Center for Biotechnology Information
 refseq
 }
 \description{
-An FASTA format virus sequence
+A virus sequence generated from the FASTA format, refID: NC_045512.2
 }
 \examples{
 \dontrun{

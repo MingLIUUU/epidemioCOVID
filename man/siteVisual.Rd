@@ -6,14 +6,16 @@
 perform alignment between multiple sequence fasta file
 genome sequence samples of COVID virus}
 \usage{
-siteVisual(fasta, st, en)
+siteVisual(fasta, start, end, seq_name = TRUE, legend = TRUE)
 }
 \arguments{
-\item{fasta}{of user-imported sample fasta sequence}
+\item{fasta}{the path for FASTA format multiple sequences}
 
-\item{st}{start position of the sequence to visulize}
+\item{start}{start position of the sequence to visulize}
 
-\item{en}{end position of the sequence to visulize}
+\item{end}{end position of the sequence to visulize}
+
+\item{legend}{logical. Should this layer be included in the legends}
 }
 \value{
 Returns the visualization of the selected site in the alignment
@@ -24,9 +26,13 @@ perform alignment between multiple sequence fasta file
 genome sequence samples of COVID virus
 }
 \examples{
-fasta <- system.file("extdata", "sample2.fasta", package = "epidemioCOVID")
+FA <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
 siteVisual(fasta, 1, 20)
 
+\dontrun{
+fasta <- system.file("extdata", "sample2.fasta", package = "epidemioCOVID")
+siteVisual(fasta, 1, 20)
+}
 }
 \references{
 L Zhou, T Feng, S Xu, F Gao, TT Lam, Q Wang, T Wu, H Huang,

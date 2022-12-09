@@ -20,6 +20,8 @@ read the input in FASTA format
 FA <- system.file("extdata", "sample.fasta", package = "epidemioCOVID")
 seqs <- readFASTA(FA)
 
+FA <- system.file("extdata", "sampleseq.fasta", package = "epidemioCOVID")
+seqs <- readFASTA(FA)
 
 }
 \references{
