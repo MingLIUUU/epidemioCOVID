@@ -17,18 +17,16 @@ RoxygenNote: 7.2.2
 Imports: 
     Biostrings,
     ggmsa,
-    ggplot2 (>= 3.4.0),
-    magrittr,
-    methods,
+    graphics,
     msa,
-    seqmagick,
     shiny,
-    tidyr
+    utils
 Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Depends: R (>= 4.2.2)
+Depends: R (>= 4.2.0)
 LazyData: true
 Config/testthat/edition: 3
+Remotes: github::YuLab-SMU/ggmsa
