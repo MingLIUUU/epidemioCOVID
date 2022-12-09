@@ -37,7 +37,7 @@ runepidemioCOVID()
 
 ## Overview
 
-`epidemioCOVID` contains 4 funtions.
+`epidemioCOVID` contains 5 funtions.
 
 To list all functions available in the package:
 
