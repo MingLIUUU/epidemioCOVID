@@ -35,8 +35,6 @@ To run the shinyApp:
 runepidemioCOVID()
 ```
 
-![](./inst/extdata/shiny.png)
-
 ## Overview
 
 `epidemioCOVID` contains 4 funtions.
@@ -50,8 +48,8 @@ data(package = "epidemioCOVID") # optional
 
 `epidemioCOVID` contains 5 functions to perform alignment between
 user-input of COVID gene sequence data in FASTA form and the reference
-sequence of COVID virus and identify the mutation site of ’the
-user-input with a graphical visualization of the mutation site in the
+sequence of COVID virus, and to identify the conserved site of ’the
+user-input with a graphical visualization of the conserved site in the
 sequence. The *readFASTA* is function that read the FASTA format file
 and turn it into input accepted by other functions. The *preAlign*
 function that prepare the mutiple sequnence set object generate by
@@ -88,10 +86,8 @@ siteVisual(fasta, 45, 55)
 
 ![](./inst/extdata/SiteVisual.jpeg)
 
-They can also use the plotting funtion through the shiny implementation
-with a user-friendly graphic interface.
-
-![](./inst/extdata/shiny.png)
+Users can also use the plotting funtion through the shiny implementation
+with a user-friendly graphic interface. ![](./inst/extdata/shiny.png)
 
 ``` r
 
@@ -110,6 +106,10 @@ BCB410 class by Professor Anjali Silva.
 
 - \[Boris Steipe. “Multiple Sequence Alignment.”\]
   (<http://steipe.biochemistry.utoronto.ca/bio/BIN-ALI-MSA.html>)
+
+- \[Edgar R. C. (2004). MUSCLE: multiple sequence alignment with high
+  accuracy and high throughput. Nucleic acids research, 32(5),
+  1792–1797.\] (<https://doi.org/10.1093/nar/gkh340>)
 
 - \[Silva, Anjali. “Anjalisilva/TestingPackage: A Simple R Package
   Illustrating Components of an R Package: 2019-2022 BCB410H - Applied
