@@ -181,8 +181,8 @@ msaPlot <- function(msa) {
 #'
 #' @examples
 #' \dontrun{
-#' fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
-#' siteVisual(fasta, 45, 55)
+# fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
+# siteVisual(fasta, 45, 55)
 #' }
 #' @examples
 #' \dontrun{
