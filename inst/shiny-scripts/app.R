@@ -1,10 +1,14 @@
-library(shiny)
 
+if (interactive()) {
+  library(shiny)
+  library(ggplot2)
+}
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
 
   # App title ----
-  titlePanel(tags$h1(tags$b("epidemioCOVID:"),"alinment sequence site Visualization")),
+  titlePanel(tags$h1(tags$b("epidemioCOVID:"),
+                     "Sequences Alignment Visualization")),
 
 
 
@@ -17,29 +21,33 @@ ui <- fluidPage(
     tags$p("To visualize the selected site of your alignmnet, upload the FASTA
          format multiple sequence file. Enter the start anf the end position of
          the site you want to visulize."),
+
       # Input: Select a file ----
       fileInput("file1", "Choose FASTA File",
                 multiple = TRUE,
                 accept = ".fasta"),
-      tags$p("Enter the start and end position)"),
-      textAreaInput("sta", "start position"),
-      textAreaInput("end", "end position" ),
-      actionButton("start", "Start"),
+      tags$p("select the range of start and end position detailed site visualization"),
 
+      # Input: Specification of range within an interval ----
+      sliderInput("range", "Range(%):",
+                min = 1, max = 100,
+                value = c(1,10)),
 
+      actionButton("start", "Start")
     ),
 
     # Main panel for displaying outputs ----
     mainPanel(
 
       # Output: Selected site Plot ----
-      plotOutput(outputId = "Plot")
+      plotOutput("plotWhole"),
+      plotOutput("plotSite")
 
     )
   )
 )
 
-# Define server logic required to draw a histogram ----
+# Define server logic required to draw two plots ----
 server <- function(input, output) {
 
   v <- reactiveValues(dothing = FALSE)
@@ -48,14 +56,33 @@ server <- function(input, output) {
     v$dothing <- input$start
   })
 
-  output$plot <- renderPlot({
-    if (v$dothing == FALSE) return()
+  observeEvent(is.null(input$file1$datapath), {
+    v$dothing <- FALSE
+  })
+
+  output$plotWhole <- renderPlot({
+    if (v$dothing == FALSE) return(NULL)
     else{
-      epidemioCOVID::siteVisual(input$file1$datapath,
-                                 input$sta,
-                                 input$end)
+      seqs <- epidemioCOVID::readFASTA(input$file1$datapath)
+      msaSet <- epidemioCOVID::preAlign(seqs, refseq = fakeref)
+      msa <- epidemioCOVID::alignMSA(msaSet)
+      epidemioCOVID::msaPlot(msa)
     }
   })
+
+  output$plotSite <- renderPlot({
+    if (v$dothing == FALSE) return(NULL)
+    else {
+      seqs <- epidemioCOVID::readFASTA(input$file1$datapath)
+      len <- min(nchar(seqs$seq)) * 0.01
+      start = round(len * input$range[1], digits = 0)
+      end = round(len * input$range[2], digits = 0)
+      epidemioCOVID::siteVisual(input$file1$datapath,
+                                 start = start,
+                                 end = end)
+    }
+  })
+
 
 
 }

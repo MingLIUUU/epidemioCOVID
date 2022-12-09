@@ -91,6 +91,8 @@ siteVisual(fasta, 45, 55)
 They can also use the plotting funtion through the shiny implementation
 with a user-friendly graphic interface.
 
+![](./inst/extdata/shiny.png)
+
 ``` r
 
 browseVignettes("epidemioCOVID")
