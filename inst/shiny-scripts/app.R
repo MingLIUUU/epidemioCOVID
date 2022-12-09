@@ -26,7 +26,8 @@ ui <- fluidPage(
       fileInput("file1", "Choose FASTA File",
                 multiple = TRUE,
                 accept = ".fasta"),
-      tags$p("select the range of start and end position detailed site visualization"),
+      tags$p(
+"select the range of start and end position of the site visualization"),
 
       # Input: Specification of range within an interval ----
       sliderInput("range", "Range(%):",
@@ -89,3 +90,4 @@ server <- function(input, output) {
 
 # Create Shiny app ----
 shinyApp(ui = ui, server = server)
+# [END]

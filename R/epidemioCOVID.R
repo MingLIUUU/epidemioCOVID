@@ -25,6 +25,57 @@ readFASTA <- function(FA) {
   if (length(FA) == 1) {
     FA <- readLines(FA)
   }
+  # validating input
+    if ( ! any(grepl("^>", FA)) ) {
+      stop("no header lines in input")
+    }
+
+    isHeader <- grepl("^>", FA)
+    isSpacer <- grepl("^\\s*$", FA)
+    FANoSpc <- FA[! isSpacer]
+
+    # adjacent headers
+    sel <- isHeader[- length(isHeader)] & isHeader[-1]
+    if ( any(sel) ) {
+      i <- which(sel)[1]
+      stop(sprintf("adjacent header lines in input (lines %d and %d)",
+                   i, i+1))
+    }
+    # define valid DNA nucleotides characters
+    NTVALID  <- "GCAT*-"
+    # invalid character in a line that is not header or spacer
+    selA <- isHeader | isSpacer
+    selB <- grepl(sprintf("[^%s]", NTVALID), FA)
+    if ( any( (! selA) & selB) ) {  # (not header) AND (has invalid character)
+      i <- which( (! selA) & selB)[1]
+      stop(sprintf("invalid character(s) in sequence (cf. line %d)", i))
+    }
+
+    # no spacer should immediately follow a header
+    sel <- c(isSpacer, FALSE) & c(FALSE, isHeader)
+    if ( any(sel) ) {
+      i <- which(sel)[1]
+      stop(sprintf("a header has no adjacent sequence (line %d)", i - 1))
+    }
+
+    # no header alone on the last line
+    if ( which(isHeader)[sum(isHeader)] == length(FA)) {
+      stop(sprintf("a header is alone on the last line (line %d)", length(FA)))
+    }
+
+    # no spacer in a block of sequence
+    # (tested as: not followed by spacer or header)
+
+    if (sum(isSpacer) > 0) {
+      sel <- which(isSpacer) + 1
+      sel <- sel[sel <= length(FA)]
+      if ( ! all(isSpacer[sel] | isHeader[sel]) ) {
+        i <- which(! (isSpacer[sel] | isHeader[sel]))[1]
+        stop(sprintf("a spacer is followed by sequence (line %d)",
+                     which(isSpacer)[i]))
+      }
+    }
+
   FA <- FA[! grepl("^$", FA)]   # drop all empty lines
   iHead <- grep("^>", FA) # find all headers
   myFA <- data.frame(head = FA[iHead],
@@ -34,7 +85,8 @@ readFASTA <- function(FA) {
   for (i in seq_along(iHead)) {
     header <- FA[iHead[i]]
     refidlast <- unlist(gregexpr('\\|', header))[1] - 2
-    myFA$refID[i] <- paste0(substring(header, 2, last= refidlast), collapse = "")
+    myFA$refID[i] <- paste0(substring(header, 2, last= refidlast),
+                            collapse = "")
     first <- iHead[i] + 1   # first line of each sequence
     last  <- ifelse(i < length(iHead), iHead[i + 1] - 1, length(FA)) # ...last
     myFA$seq[i] <- paste0(FA[first:last], collapse = "")
@@ -181,8 +233,8 @@ msaPlot <- function(msa) {
 #'
 #' @examples
 #' \dontrun{
-#' fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
-#' siteVisual(fasta, 45, 55)
+#' fa <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
+#' siteVisual(fa, 45, 55)
 #' }
 #' @examples
 #' \dontrun{
@@ -205,3 +257,4 @@ siteVisual <- function(fasta, start, end,  legend = TRUE) {
 
 
 
+# [END]
