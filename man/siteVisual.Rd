@@ -27,8 +27,6 @@ genome sequence samples of COVID virus
 }
 \examples{
 \dontrun{
-fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
-siteVisual(fasta, 45, 55)
 }
 \dontrun{
 fasta <- system.file("extdata", "sample2.fasta", package = "epidemioCOVID")
