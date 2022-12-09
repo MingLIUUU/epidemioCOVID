@@ -71,7 +71,7 @@ msa <- alignMSA(msaSet)
 MP <- msaPlot(msa)
 ```
 
-![](./inst/extdata/AlignmentPosition,jpeg) *siteVisual* is a plotting
+![](./inst/extdata/AlignmentPosition.jpeg) *siteVisual* is a plotting
 function that take the FASTA mutiple sequence file and visualize zoomed
 detail information of the sequnce position, and the start and end
 positions can be decided by the user. User is able to upload their
@@ -84,7 +84,7 @@ fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
 siteVisual(fasta, 45, 55)
 ```
 
-![](./inst/extdata/SiteVisual,jpeg)
+![](./inst/extdata/SiteVisual.jpeg)
 
 They can also use the plotting funtion through the shiny implementation
 with a user-friendly graphic interface.
