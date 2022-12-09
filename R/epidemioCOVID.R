@@ -181,8 +181,8 @@ msaPlot <- function(msa) {
 #'
 #' @examples
 #' \dontrun{
-# fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
-# siteVisual(fasta, 45, 55)
+#' fasta <- system.file("extdata", "samplefake.fasta", package = "epidemioCOVID")
+#' siteVisual(fasta, 45, 55)
 #' }
 #' @examples
 #' \dontrun{
@@ -198,8 +198,6 @@ msaPlot <- function(msa) {
 siteVisual <- function(fasta, start, end,  legend = TRUE) {
   gra <- (ggmsa(fasta, start = start, end = end, color = "Chemistry_NT",
                 char_width = 0.5, seq_name = T, show.legend = legend)
-          + geom_seqlogo()
-          + geom_msaBar()
           )
   return (gra)
 }
