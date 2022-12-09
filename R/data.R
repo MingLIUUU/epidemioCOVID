@@ -22,4 +22,16 @@
 #'  fakeref
 #' }
 "fakeref"
+
+#' Attach the BLOSUM62 package from the Biostrings package
+#'
+#' A data for ploting
+#'
+#' @format data from BLOSUM62 for plotting
+
+#' @examples
+#' \dontrun{
+#'  BlOSUM62
+#' }
+"BLOSUM62"
 # [END]
