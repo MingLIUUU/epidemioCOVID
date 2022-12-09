@@ -71,11 +71,13 @@ msa <- alignMSA(msaSet)
 MP <- msaPlot(msa)
 ```
 
-![](./inst/extdata/AlignmentPosition.jpeg) *siteVisual* is a plotting
-function that take the FASTA mutiple sequence file and visualize zoomed
-detail information of the sequnce position, and the start and end
-positions can be decided by the user. User is able to upload their
-mutiple suquence FASTA format file and doing sequnce alignment analysis.
+![](./inst/extdata/AlignmentPosition.jpeg)
+
+*siteVisual* is a plotting function that take the FASTA mutiple sequence
+file and visualize zoomed detail information of the sequnce position,
+and the start and end positions can be decided by the user. User is able
+to upload their mutiple suquence FASTA format file and doing sequnce
+alignment analysis.
 
 A quick example of using *siteVisual*
 
